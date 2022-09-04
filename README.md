@@ -11,6 +11,21 @@ Lorem ipsum dolor samet consecteur.
 
 ```
 POST /api/users
+```
+#### Request
+```
+{
+  username: String
+}
+```
+#### Response
+```
+{
+  username: String,
+  _id: Number
+}
+```
+```
 POST /api/users/:_id/exercises
 GET /api/users/:_id/logs?[from][&to][&limit
 ```
