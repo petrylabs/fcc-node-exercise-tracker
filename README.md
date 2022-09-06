@@ -9,23 +9,48 @@ This is a simple app to fulfill the requirements of project 5 - exercise app of 
 * [Setup](#setup)*
 * [Endpoints](#endpoints)
   * [Users](#users)
-    * [Endpoint](#users---endpoint)
-    * [Request Body](#users---request-body)
-    * [Response Body](#users---response-body)
+    * [Create a new user](#create-a-new-user)
+      * [Endpoint](#post-users-endpoint) 
+      * [Request](#post-users-request-body) 
+      * [Response](#post-users-response-body)
+    * [List all users](#list-all-users)
+      * [Endpoint](#get-users-endpoint) 
+      * [Response](#get-users-response-body)  
   * [User Exercises](#user-exercises)
-    * [Endpoint](#user-exercises---endpoint)
-    * [Request Body](#user-exercises---request-body)
-    * [Response Body](#user-exercises---response-body)
+    * [Endpoint](#post-user-exercises-endpoint)
+    * [Request](#post-user-exercises-response-body)  
+    * [Response](#post-user-exercises-request-body)
   * [User Logs](#user-logs)
-    * [Endpoint](#user-logs---endpoint)
-    * [Request Body](#user-logs---request-body)
-    * [Response Body](#user-logs---response-body)
+    * [Endpoint](#get-user-logs-endpoint)   
+    * [Response](#get-user-logs-response-body)
 
 ## Tech Stack
 - NodeJS
 - Express
 - MongoDB
 - Mongoose
+
+## Project Setup
+This is how this project is setup:
+```
+📂 root
+|
+|-📂 config
+| |
+| |-📄 doc1.js
+| |-📄 doc2.js
+|
+|-📂 src
+| |
+| |-📄 doc1.js
+| |-📄 doc2.js
+|
+|-📂 tests
+| |
+| |-📄 doc1.js
+| |-📄 doc2.js
+
+```
 
 ## Setup
 Lorem ipsum dolor samet consecteur.
@@ -36,36 +61,58 @@ Lorem ipsum dolor samet consecteur.
 ## Endpoints
 
 ### Users
-Lorem ipsum dolor samet.
 
-#### Users - Endpoint
+#### Create a new user
+
+##### POST Users Endpoint
 ```
 POST /api/users
 ```
 
-#### Users - Request Body
+##### POST Users Request Body
+You can `POST` to `/api/users` with form data `username` to create a new user.
 ```
 {
-  username: String
+  username: "John_Doe"
 }
 ```
-#### Users - Response Body
+##### POST Users Response Body
+The returned response from `POST /api/users` with form data username will be an object with `username` and `_id` properties.
 ```
 {
-  username: String,
-  _id: Number
+  username: "John_Doe",
+  _id: 13213123
 }
 ```
-### User Exercises
-Lorem ipsum dolor samet.
 
-#### User Exercises - Endpoint
+#### List all users
+
+##### GET Users Endpoint
+You can make a GET request to /api/users to get a list of all users.
+```
+GET /api/users
+```
+
+##### GET Users Response Body
+The GET request to /api/users returns an array. Each element in the array returned from `GET /api/users` is an object literal containing a user's `username` and `_id`.
+```
+[
+ {"_id":"6120c6d1f5860e05a3652f44","username":"efs","__v":0},
+ {"_id":"6120dc43f5860e05a3652f49","username":"itsakanda","__v":0},
+ {"_id":"6120ef4ff5860e05a3652f4a","username":"t","__v":0},
+ {"_id":"6120ef54f5860e05a3652f4b","username":"julliathome","__v":0}
+]
+```
+
+### User Exercises
+
+#### POST User Exercises Endpoint
 ```
 POST /api/users/:_id/exercises
 ```
 
-#### User Exercises - Request Body
-You can POST to /api/users/:_id/exercises with form data description, duration, and optionally date. If no date is supplied, the current date will be used.
+#### POST User Exercises Request Body
+You can `POST` to `/api/users/:_id/exercises` with form data `description`, `duration`, and optionally `date`. If no date is supplied, the current date will be used.
 ```
 {
   username: "fcc_test",
@@ -73,8 +120,8 @@ You can POST to /api/users/:_id/exercises with form data description, duration, 
   duration: 60
 }
 ```
-#### User Exercises - Response Body
-The response returned from POST /api/users/:_id/exercises will be the user object with the exercise fields added.
+#### POST User Exercises Response Body
+The response returned from `POST /api/users/:_id/exercises` will be the user object with the exercise fields added.
 ```
 {
   username: "fcc_test",
@@ -85,61 +132,41 @@ The response returned from POST /api/users/:_id/exercises will be the user objec
 }
 ```
 ### User Logs
-Lorem ipsum dolor samet.
 
-#### User Logs - Endpoint
+#### GET User Logs Endpoint
+You can make a GET request to /api/users/:_id/logs to retrieve a full exercise log of any user.
 ```
 GET /api/users/:_id/logs
 ```
-#### User Logs - Response Body
-A GET request to /api/users/:_id/logs will return the user object with a log array of all the exercises added.
+#### GET User Logs Response Body
+A request to a user's log `GET /api/users/:_id/logs` returns a user object with a count property representing the number of exercises that belong to that user. A `GET` request to `/api/users/:_id/logs` will return the user object with a log array of all the exercises added. Each item in the log array that is returned from `GET /api/users/:_id/logs` is an object that should have a `description`, `duration`, and `date` properties.
 ```
-{
-  /* Response Body */
-}
-```
-## Data Structures
-
-#### Exercise
-```
-
-```
-#### User
-```
-{
-  username: "fcc_test",
-  _id: "5fb5853f734231456ccb3b05"
-}
-```
-#### Log
-```
-
 {
   username: "fcc_test",
   count: 1,
   _id: "5fb5853f734231456ccb3b05",
   log: [{
-    description: "test",
-    duration: 60,
-    date: "Mon Jan 01 1990",
+    description: "test", /* String */
+    duration: 60, /* Number */
+    date: "Mon Jan 01 1990", /* String (dateString of Date API) */
   }]
 }
 ```
 ### Tests
-- [ ] You can POST to /api/users with form data username to create a new user.
-- [ ] The returned response from POST /api/users with form data username will be an object with username and _id properties.
-- [ ] You can make a GET request to /api/users to get a list of all users.
-- [ ] The GET request to /api/users returns an array.
-- [ ] Each element in the array returned from GET /api/users is an object literal containing a user's username and _id.
-- [ ] You can POST to /api/users/:_id/exercises with form data description, duration, and optionally date. If no date is supplied, the current date will be used.
-- [ ] The response returned from POST /api/users/:_id/exercises will be the user object with the exercise fields added.
-- [ ] You can make a GET request to /api/users/:_id/logs to retrieve a full exercise log of any user.
-- [ ] A request to a user's log GET /api/users/:_id/logs returns a user object with a count property representing the number of exercises that belong to that user.
-- [ ] A GET request to /api/users/:_id/logs will return the user object with a log array of all the exercises added.
-- [ ] Each item in the log array that is returned from GET /api/users/:_id/logs is an object that should have a description, duration, and date properties.
-- [ ] The description property of any object in the log array that is returned from GET /api/users/:_id/logs should be a string.
-- [ ] The duration property of any object in the log array that is returned from GET /api/users/:_id/logs should be a number.
-- [ ] The date property of any object in the log array that is returned from GET /api/users/:_id/logs should be a string. Use the dateString format of the Date API.
-- [ ] You can add from, to and limit parameters to a GET /api/users/:_id/logs request to retrieve part of the log of any user. from and to are dates in yyyy-mm-dd format. limit is an integer of how many logs to send back.
+- [X] You can POST to /api/users with form data username to create a new user.[🔗](#post-users-request-body)
+- [X] The returned response from POST /api/users with form data username will be an object with username and _id properties.[🔗](#post-users-response-body)
+- [X] You can make a GET request to /api/users to get a list of all users.[🔗](#get-users-endpoint)
+- [X] The GET request to /api/users returns an array.[🔗](#get-users-response-body)
+- [X] Each element in the array returned from GET /api/users is an object literal containing a user's username and _id.[🔗](#get-users-response-body)
+- [X] You can POST to /api/users/:_id/exercises with form data description, duration, and optionally date. If no date is supplied, the current date will be used.[🔗](#post-user-exercises-request-body)
+- [X] The response returned from POST /api/users/:_id/exercises will be the user object with the exercise fields added.[🔗](#post-user-exercises-response-body)
+- [X] You can make a GET request to /api/users/:_id/logs to retrieve a full exercise log of any user.[🔗](#get-user-logs-endpoint)
+- [X] A request to a user's log GET /api/users/:_id/logs returns a user object with a count property representing the number of exercises that belong to that user.[🔗](#get-user-logs-response-body)
+- [X] A GET request to /api/users/:_id/logs will return the user object with a log array of all the exercises added.[🔗](#get-user-logs-response-body)
+- [X] Each item in the log array that is returned from GET /api/users/:_id/logs is an object that should have a description, duration, and date properties.[🔗](#get-user-logs-response-body)
+- [X] The description property of any object in the log array that is returned from GET /api/users/:_id/logs should be a string.[🔗](#get-user-logs-response-body)
+- [X] The duration property of any object in the log array that is returned from GET /api/users/:_id/logs should be a number.[🔗](#get-user-logs-response-body)
+- [X] The date property of any object in the log array that is returned from GET /api/users/:_id/logs should be a string. Use the dateString format of the Date API.[🔗](#get-user-logs-response-body)
+- [X] You can add from, to and limit parameters to a GET /api/users/:_id/logs request to retrieve part of the log of any user. from and to are dates in yyyy-mm-dd format. limit is an integer of how many logs to send back.[🔗](#get-user-logs-response-body)
 
 SRC: https://wrighter.vercel.app/wright?id=UqJizt3Vtmv20kMFfLC78
