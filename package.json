@@ -4,6 +4,7 @@
   "description": "freeCodeCamp Back End and APIs Project 4 - Exercise Tracker",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
     "devstart": "nodemon app.js",
     "serverstart": "DEBUG=fcc-node-exercise-tracker:* npm run devstart",
     "test": "echo \"Error: no test specified\" && exit 1"
