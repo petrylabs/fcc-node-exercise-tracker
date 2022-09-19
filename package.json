@@ -1,0 +1,32 @@
+{
+  "name": "fcc-node-exercise-tracker",
+  "version": "1.0.0",
+  "description": "freeCodeCamp Back End and APIs Project 4 - Exercise Tracker",
+  "main": "index.js",
+  "scripts": {
+    "devstart": "nodemon app.js",
+    "serverstart": "DEBUG=fcc-node-exercise-tracker:* npm run devstart",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/petrylabs/fcc-node-exercise-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/petrylabs/fcc-node-exercise-tracker/issues"
+  },
+  "homepage": "https://github.com/petrylabs/fcc-node-exercise-tracker#readme",
+  "dependencies": {
+    "async": "^3.2.4",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1",
+    "express-validator": "^6.14.2",
+    "mongoose": "^6.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
