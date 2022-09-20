@@ -46,20 +46,21 @@ exports.user_log_list_get = (req, res) => {
                 return next(err);
             }
             const resObj = {
-                filter: {
-                    id: params.id,
-                    query
-                },
+                // filter: {
+                //     id: params.id,
+                //     query
+                // },
+                _id: user._id,
                 username: user.username,
                 count: user_exercise_count,
                 log: user_exercises.map(user_exercise => ({
-                    _id: user_exercise._id,
+                    // _id: user_exercise._id,
                     // The description property of any object in the log array that is returned from GET /api/users/:_id/logs should be a string.
                     description: user_exercise.description,
                     // The duration property of any object in the log array that is returned from GET /api/users/:_id/logs should be a number.
                     duration: user_exercise.duration,
                     // The date property of any object in the log array that is returned from GET /api/users/:_id/logs should be a string. Use the dateString format of the Date API.
-                    date: user_exercise.date
+                    date: (new Date(user_exercise.date)).toDateString()
                 }))
             }
             res.json(resObj)

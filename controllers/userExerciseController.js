@@ -5,7 +5,7 @@ const UserExercise = require('../models/userExercise');
 // You can POST to /api/users/:_id/exercises with form data description, duration, and optionally date. If no date is supplied, the current date will be used.
 exports.user_exercise_create_post = [
     (req, res, next) => {
-        console.log('req.body', req.body);
+        //console.log('req.body', req.body);
         next();
     },
     // Validate and sanitize fields.
@@ -56,8 +56,15 @@ exports.user_exercise_create_post = [
             }
             // The response returned from POST /api/users/:_id/exercises will be the user object with the exercise fields added.
             // TO-DO: Missing username and formatted date
-            const populatedUser = await savedUser.populate({path: 'user', select: 'username'})
-            res.json(populatedUser);
+            const populatedUser = await savedUser.populate({path: 'user', select: '_id username'})
+            const resObj = {
+                _id: populatedUser.user._id,
+                username: populatedUser.user.username,
+                description: userExercise.description,
+                duration: userExercise.duration,
+                date: (new Date(userExercise.date)).toDateString()
+            }
+            res.json(resObj);
         })
     }
 ]
