@@ -21,10 +21,6 @@ exports.user_exercise_create_post = [
         .trim()
         .isLength({min: 1})
         .escape(),
-    body('date', 'date must not be empty')
-        .trim()
-        .isLength({min: 1})
-        .escape(),
     // Process request after validation and sanitization
     (req, res, next) => {
         // Extract the validation errors from a request.
@@ -41,7 +37,7 @@ exports.user_exercise_create_post = [
             user: req.body[':_id'],
             description: req.body.description,
             duration: req.body.duration,
-            date: req.body.date
+            date: req.body.date || new Date()
         });
 
         if(!errors.isEmpty()) {
