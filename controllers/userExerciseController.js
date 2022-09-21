@@ -9,10 +9,10 @@ exports.user_exercise_create_post = [
         next();
     },
     // Validate and sanitize fields.
-    body(':_id', ':_id must not be empty')
-        .trim()
-        .isLength({min: 1})
-        .escape(),
+    // body(':_id', ':_id must not be empty')
+    //     .trim()
+    //     .isLength({min: 1})
+    //     .escape(),
     body('description', 'description must not be empty')
         .trim()
         .isLength({min: 1})
@@ -34,7 +34,7 @@ exports.user_exercise_create_post = [
 
         // Create an exercise with escaped and trimmed data.
         const userExercise = new UserExercise({
-            user: req.body[':_id'],
+            user: req.body[':_id'] || req.params.id,
             description: req.body.description,
             duration: req.body.duration,
             date: req.body.date || new Date()
